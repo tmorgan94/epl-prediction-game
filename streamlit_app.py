@@ -85,7 +85,7 @@ st.dataframe(
 
 # 8. USER DEEP DIVE
 st.divider()
-st.header("User Deep Dive")
+st.header("Player Deep Dive")
 
 # Selection Box
 selected_user = st.selectbox("Pick a player:", df_current_lb['name'].unique())
@@ -123,6 +123,40 @@ with st.container():
     plot_rank_history(df_leaderboard, selected_user, selected_gw=selected_gw,key=f"trend_{selected_user}")
 
 # 9. META ANALYSIS
-st.divider()
+
 st.header("Meta Analysis")
+
+# Calculate Mean Error per team
+
+# 1. Filter for the specific gameweek first
+df_gw_data = df_merged[df_merged['gameweek'] == selected_gw]
+
+# 2. Calculate Mean Error per team for THIS gameweek
+# mean_error = Actual Position - Average Predicted Position
+team_errors = df_gw_data.groupby('team').agg({
+    'position': 'first',             # Actual league position
+    'predicted_position': 'mean'      # Average of all users
+}).reset_index()
+
+team_errors['mean_error'] = team_errors['position'] - team_errors['predicted_position']
+
+# Identify the teams
+most_overestimated = team_errors.sort_values("mean_error", ascending=False).iloc[0]['team']
+most_underestimated = team_errors.sort_values("mean_error", ascending=True).iloc[0]['team']
+most_predictable = team_errors.loc[team_errors['mean_error'].abs().idxmin()]['team']
+
+# --- Team Highlights Row ---
+col4, col5, col6 = st.columns(3)
+
+with col4:
+    metric_card("📉 Overestimated", most_overestimated)
+with col5:
+    metric_card("🚀 Underestimated", most_underestimated)
+with col6:
+    metric_card("🎯 Most Predictable", most_predictable)
+
+st.divider()
+
 st.plotly_chart(plot_crowd_error(df_merged, selected_gw), use_container_width=True)
+
+
