@@ -24,7 +24,7 @@ if os.path.exists(css_path):
 
 # 3. DATA PROCESSING
 # st.cache_data so the app doesn't re-run the math on every click
-#@st.cache_data
+@st.cache_data(ttl=86400)  # cache for 24 hours
 def get_processed_data():
     df_predictions, df_teams, df_fixtures = fetch_fpl_data()
     df_league = get_league_history(df_fixtures=df_fixtures,df_teams=df_teams)
