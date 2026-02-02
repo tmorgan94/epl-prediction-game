@@ -1,0 +1,14 @@
+# Python environment
+venv/
+.env
+__pycache__/
+*.pyc
+
+# Streamlit local config
+.streamlit/config.toml
+
+# data/epl_predictions_2026.csv
+
+# Notebooks and OS junk
+.ipynb_checkpoints/
+.DS_Store

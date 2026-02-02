@@ -1,0 +1,23 @@
+/* style.css */
+.metric-card {
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    border: 1px solid #ececec;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.card-title {
+    font-size: 0.9rem;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.card-value {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: #000000; /* Navy blue */
+    margin-top: 5px;
+}
