@@ -79,7 +79,6 @@ def calculate_leaderboard(df_league, df_predictions):
 
     # 1. Proximity Score calculation
     df_merged['predicted_difference'] = df_merged['position'] - df_merged['predicted_position']
-    
     # Calculate proximity and floor to 0 (no negative scores)
     df_merged['proximity_score'] = (PROXIMITY_MAX - (df_merged['predicted_difference'].abs() * PROXIMITY_STEP)).clip(lower=0)
 

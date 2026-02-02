@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import os
 
-# Import your custom modules
+# Import custom modules
 from src.data_loader import fetch_fpl_data
 from src.data_transform import get_league_history, calculate_leaderboard
 from src.plotting import plot_leaderboard_bar, plot_crowd_error, plot_rank_history
@@ -23,8 +23,8 @@ if os.path.exists(css_path):
         st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
 # 3. DATA PROCESSING
-# We use st.cache_data so the app doesn't re-run the math on every click
-@st.cache_data
+# st.cache_data so the app doesn't re-run the math on every click
+#@st.cache_data
 def get_processed_data():
     df_predictions, df_teams, df_fixtures = fetch_fpl_data()
     df_league = get_league_history(df_fixtures=df_fixtures,df_teams=df_teams)
@@ -45,9 +45,9 @@ df_current_lb = df_leaderboard[df_leaderboard['gameweek'] == selected_gw]
 st.title('PL Predictions 2026')
 st.subheader(f"Gameweek {selected_gw}")
 
-# Logic for Gainer/Loser (assuming rank_movement exists in your transform)
+# Logic for Gainer/Loser
 leader_name = df_current_lb.iloc[0]['name']
-# Just examples - adjust based on your actual column names
+
 biggest_gainer = df_current_lb.sort_values("rank_movement", ascending=False).iloc[0]['name']
 biggest_loser = df_current_lb.sort_values("rank_movement", ascending=True).iloc[0]['name']
 
@@ -72,7 +72,7 @@ styled_lb = style_leaderboard(display_df)
 st.dataframe(
     styled_lb, 
     column_config={
-        'rank': st.column_config.Column(label='', width='small'), # Optional: make rank column tight
+        'rank': st.column_config.Column(label='', width='small'), 
         'name': 'Name',
         'proximity_score': 'Proximity Score',
         'perfect_match_score': 'Perfect Match Score',
@@ -117,10 +117,9 @@ st.dataframe(
     height=750
 )
 
-# 3. Chart (Bottom - now uses full width)
+# 3. Chart 
 st.subheader("Rank History")
-with st.container(): # Using a container to keep it organized
-    # ADD THE KEY HERE
+with st.container(): 
     plot_rank_history(df_leaderboard, selected_user, selected_gw=selected_gw,key=f"trend_{selected_user}")
 
 # 9. META ANALYSIS
