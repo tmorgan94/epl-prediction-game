@@ -68,8 +68,8 @@ def style_user_deep_dive_alt(df):
         great_green   = 'background-color: #00BB7765' # Very Close (1 diff)
         good_green    = 'background-color: #00BB7735' # Close (1-2 diff)
         warning_gold  = 'background-color: #00BB7715' # Average (3-4 diff)
-        light_red    = 'background-color: #FF000015' # Poor (5 diff)
-        bad_red       = 'background-color: #FF000035' # Way off (>5 diff)
+        light_red    = 'background-color: #FF000010' # Poor (5 diff)
+        bad_red       = 'background-color: #FF000030' # Way off (>5 diff)
         
         # Calculate the absolute gap
         gap = abs(row['predicted_difference'])
@@ -80,9 +80,9 @@ def style_user_deep_dive_alt(df):
             return [great_green] * len(row)
         elif gap <= 2:
             return [good_green] * len(row)
-        elif gap <= 5:
+        elif gap <= 4:
             return [warning_gold] * len(row)
-        elif gap <= 8:
+        elif gap <= 5:
             return [light_red] * len(row)
         else:
             return [bad_red] * len(row)
