@@ -4,6 +4,8 @@ An interactive Streamlit dashboard that tracks and ranks player performance in P
 
 Before the start of every season, for a bit of fun, my friends and I try to predict the final league standings and put a prize on the line. In previous years, someone calculated the results at the end in Excel, but I wanted to use this as a small opportunity to improve my python skills and create a small project and dashboard for my friends. Easily replicable with a simple dataset to start.
 
+[![Dashboard](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://barry-epl.streamlit.app/)
+
 ## Features
 * **Live Standings:** Fetches real-time Premier League data to compare against user predictions.
 * **Custom Scoring:** A tiered points system rewarding proximity to actual results.
