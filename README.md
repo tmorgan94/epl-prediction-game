@@ -25,7 +25,7 @@ The system uses a **10-point ceiling** with a **step of 2** for each position mi
 | **4 Places Off** | 10 - 8 | **2** | 
 | **5+ Places Off** | 10 - 10 | **0** |
 
-**Brave Prediction Multiplier:** If a user makes a prediction that deviates significantly from the average (Z-Score ≥ 1.5) and is accurate within 1 place, their points for that team are **doubled**.
+**Brave Prediction Multiplier:** If a user makes a prediction that deviates significantly from the average (Z-Score ≥ 1.5) and has a perfect prediction, they receive an additional **5-point bonus**.
 
 ## Installation & Setup
 
