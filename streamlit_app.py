@@ -35,7 +35,7 @@ df_leaderboard, df_merged = get_processed_data()
 
 # 4. SIDEBAR
 st.sidebar.header("Filters")
-gameweeks = sorted(df_leaderboard['gameweek'].unique(), reverse=True)
+gameweeks = sorted(df_leaderboard['gameweek'].dropna().unique().astype(int), reverse=True)
 selected_gw = st.sidebar.selectbox("Select Gameweek", options=gameweeks, index=0)
 
 # Filter data based on selection
@@ -43,13 +43,30 @@ df_current_lb = df_leaderboard[df_leaderboard['gameweek'] == selected_gw]
 
 # 5. HEADER & METRIC CARDS
 st.title('PL Predictions 2026')
-st.subheader(f"Gameweek {selected_gw}")
+st.subheader(f"Gameweek {int(selected_gw)}")
 
 # Logic for Gainer/Loser
 leader_name = df_current_lb.iloc[0]['name']
 
-biggest_gainer = df_current_lb.sort_values("rank_movement", ascending=False).iloc[0]['name']
-biggest_loser = df_current_lb.sort_values("rank_movement", ascending=True).iloc[0]['name']
+# Get the actual min and max movement values
+max_move = df_current_lb['rank_movement'].max()
+min_move = df_current_lb['rank_movement'].min()
+
+# Identify Riser: Only show a name if someone actually moved up
+if max_move > 0:
+    biggest_gainer = df_current_lb.sort_values("rank_movement", ascending=False).iloc[0]['name']
+    riser_value = f"↑ {int(max_move)}"
+else:
+    biggest_gainer = "No Change"
+    riser_value = "No Change"
+
+# Identify Faller: Only show a name if someone actually moved down
+if min_move < 0:
+    biggest_loser = df_current_lb.sort_values("rank_movement", ascending=True).iloc[0]['name']
+    faller_value = f"↓ {int(abs(min_move))}"
+else:
+    biggest_loser = "No Change"
+    faller_value = "No Change"
 
 col1, col2, col3 = st.columns(3)
 with col1:

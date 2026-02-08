@@ -75,7 +75,7 @@ def calculate_leaderboard(df_league, df_predictions):
     PERFECT_MATCH_BONUS = 5 # Bonus for exact position
     BOLD_THRESHOLD = 1.5 # Z-Score required for a bold choice
     BOLD_ERROR = 0 # Max distance from actual to qualify for multiplier
-    BOLD_MULTIPLIER = 2.0 # Multiplier 
+    BOLD_BONUS = 5.0 # Bonus points for a bold choice
 
     # 1. Proximity Score calculation
     df_merged['predicted_difference'] = df_merged['position'] - df_merged['predicted_position']
@@ -101,14 +101,10 @@ def calculate_leaderboard(df_league, df_predictions):
     is_bold = df_merged['z_score'] >= BOLD_THRESHOLD
     is_accurate = df_merged['predicted_difference'].abs() <= BOLD_ERROR
     mask_bold_hit = is_bold & is_accurate
-
-    # Step B: Calculate the 'extra' points provided by the multiplier
-    # Bonus = (Proximity + Perfect) * (Multiplier - 1)
-    # If Multiplier is 2.0, this essentially adds 100% of the base points to the boldness column.
+    
     df_merged['boldness_score'] = 0.0
-    df_merged.loc[mask_bold_hit, 'boldness_score'] = (
-        (df_merged['proximity_score'] + df_merged['perfect_match_score']) * (BOLD_MULTIPLIER - 1)
-    )
+    # Assign the flat bonus to rows that meet the criteria
+    df_merged.loc[mask_bold_hit, 'boldness_score'] = BOLD_BONUS
 
     # 5. Total Score
     df_merged['total_score'] = (
