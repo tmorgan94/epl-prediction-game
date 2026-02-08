@@ -74,7 +74,7 @@ def calculate_leaderboard(df_league, df_predictions):
     PROXIMITY_STEP = 2 # Points decrease per position away
     PERFECT_MATCH_BONUS = 5 # Bonus for exact position
     BOLD_THRESHOLD = 1.5 # Z-Score required for a bold choice
-    BOLD_ERROR = 1 # Max distance from actual to qualify for multiplier
+    BOLD_ERROR = 0 # Max distance from actual to qualify for multiplier
     BOLD_MULTIPLIER = 2.0 # Multiplier 
 
     # 1. Proximity Score calculation
